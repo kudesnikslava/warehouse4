@@ -8,12 +8,16 @@ namespace CommonLibrary.Repositories.Interfaces
     public interface IBaseRepository<TModel, TSearch> where TModel : BaseModelWithId, new() 
                                                       where TSearch: BaseSearchOptions
     {
-        /// <summary>
-        /// Gets first or null
-        /// </summary>
-        /// <param name="searchOptions"></param>
-        /// <returns></returns>
-        Task<TModel> GetFirstOrDefault(TSearch searchOptions);
+
+	    Task<List<TModel>> GetAll();
+	    
+
+		/// <summary>
+		/// Gets first or null
+		/// </summary>
+		/// <param name="searchOptions"></param>
+		/// <returns></returns>
+		Task<TModel> GetFirstOrDefault(TSearch searchOptions);
 
         /// <summary>
         /// Gets list of items

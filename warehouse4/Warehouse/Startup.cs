@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -60,12 +61,19 @@ namespace Warehouse
 				//TODO Почему здесь нет CustomerUpdateRequest. Маппинг в контроллере есть в методе update
 			});
 
+			services.AddSingleton<IMongoClient>(x => new MongoClient(GetMongoConnectionString()));
+
 			services.AddSingleton(typeof(IDiskCache), typeof(RedisDiskCache));
-	        services.AddSingleton<CustomersRepository>();
+			services.AddSingleton(typeof(ICustomersRepository), typeof(CustomersRepository));
+			//services.AddSingleton(typeof(ICustomersRepository), typeof(CustomersMongoRepository));
 			services.AddSingleton<EntitiesRepository>();
 			services.AddSingleton<DataManager>();
 		}
 
+	    private String GetMongoConnectionString()
+	    {
+		    return "mongodb://slava:<password>@cluster0-shard-00-00-wtsfy.mongodb.net:27017,cluster0-shard-00-01-wtsfy.mongodb.net:27017,cluster0-shard-00-02-wtsfy.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true";
+	    }
 
 
 	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

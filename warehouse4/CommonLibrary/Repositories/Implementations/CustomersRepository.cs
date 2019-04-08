@@ -8,8 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace CommonLibrary.Repositories.Implementations
 {
-    public class CustomersRepository : BaseRepository<Customer, BaseSearchOptions>
-    {
+	public interface ICustomersRepository : IBaseRepository<Customer,BaseSearchOptions>
+	{
+		Func<Customer, bool> GetMultiplePredicate(BaseSearchOptions searchOptions = default(BaseSearchOptions), PaginationOptions paginationOptions = null);
+	}
+
+	public class CustomersRepository : BaseRepository<Customer, BaseSearchOptions>, ICustomersRepository
+	{
 	    private ILogger<CustomersRepository> _logger;
 	    public CustomersRepository(ILogger<CustomersRepository> logger) //
 	    {

@@ -10,12 +10,12 @@ namespace CommonLibrary.Repositories
 {
     public class DataManager
     {
-	    private CustomersRepository _customersRepository;
+	    private ICustomersRepository _customersRepository;
 	    private EntitiesRepository _entitiesRepository;
 
 		private IDiskCache _cache;
 
-		public DataManager(CustomersRepository customersRepository, EntitiesRepository entitiesRepository, IDiskCache cache)
+		public DataManager(ICustomersRepository customersRepository, EntitiesRepository entitiesRepository, IDiskCache cache)
 		{
 			_customersRepository = customersRepository;
 			_entitiesRepository = entitiesRepository;
